@@ -43,7 +43,10 @@ import { CodeManagementService } from '@libs/platform/infrastructure/adapters/se
 import { CodeReviewPipelineContext } from '@libs/code-review/pipeline/context/code-review-pipeline.context';
 import { byokToVercelModel } from '@libs/llm/byok-to-vercel';
 import { tracedGenerateText } from '@libs/llm/llm-call';
-import { buildLangfuseTelemetry } from '@libs/core/log/langfuse';
+import {
+    buildLangfuseTelemetry,
+    toAiSdkTelemetryArgs,
+} from '@libs/core/log/langfuse';
 import {
     getTranslationsForLanguageByCategory,
     TranslationsCategory,
@@ -130,9 +133,8 @@ export class CommentManagerService implements ICommentManagerService {
                     system: systemPrompt,
                     prompt: userPrompt,
                     temperature: byokConfig?.main?.temperature ?? 0,
-                    experimental_telemetry: buildLangfuseTelemetry(
-                        runName,
-                        metadata,
+                    ...toAiSdkTelemetryArgs(
+                        buildLangfuseTelemetry(runName, metadata),
                     ),
                 });
             },

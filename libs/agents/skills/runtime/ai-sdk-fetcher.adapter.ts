@@ -102,7 +102,7 @@ export interface FetcherRunResult {
  *
  * The result is the LAST assistant step's text — matching the legacy fetcher
  * contract of returning a JSON string the capabilities parse. Langfuse parity
- * is via `input.telemetry` (forwarded to `experimental_telemetry`); Mongo
+ * is via `input.telemetry` (forwarded as AI SDK `telemetry`); Mongo
  * billing is emitted by the caller from `state.usage`.
  */
 export async function runMcpFetcherAgent(params: {
